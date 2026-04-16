@@ -72,29 +72,34 @@ function App() {
   return (
     <div className="container">
       <div className="top-banner gold-text">
-        <TrendingUp size={14} /> อัปเดตข้อมูลความรวยงวดวันที่ {targetDate ? format(new Date(targetDate), 'd MMMM yyyy', { locale: th }) : '...'}
+        <Sparkles size={14} /> ใช้ข้อมูลสถิติ 10 ปี + AI คัดเลขมงคลให้คุณ งวดวันที่ {targetDate ? format(new Date(targetDate), 'd MMMM yyyy', { locale: th }) : '...'}
       </div>
 
       <header className="header animate-fade">
-        <Sparkles className="logo-icon-main" />
-        <h1 className="gold-text">ANTIGRAVITY</h1>
-        <p className="subtitle">ศูนย์รวมความรวยและโชคลาภ ครบวงจร</p>
+        <div className="logo-section">
+          <Sparkles className="logo-icon-main" />
+          <h1 className="gold-text">ANTIGRAVITY</h1>
+          <p className="subtitle">ศูนย์รวมความรวยและโชคลาภ ครบวงจร</p>
+        </div>
       </header>
 
-      <nav className="main-nav">
-        <button 
-          className={`nav-item ${activeTab === 'lotto' ? 'active' : ''}`}
-          onClick={() => setActiveTab('lotto')}
-        >
-          <TrendingUp size={18} /> ทำนายเลขเด็ด
-        </button>
-        <button 
-          className={`nav-item ${activeTab === 'horoscope' ? 'active' : ''}`}
-          onClick={() => setActiveTab('horoscope')}
-        >
-          <Sparkles size={18} /> ดูดวงรายวัน
-        </button>
-      </nav>
+      <div className="nav-container">
+        <nav className="main-nav">
+          <button 
+            className={`nav-item ${activeTab === 'lotto' ? 'active' : ''}`}
+            onClick={() => setActiveTab('lotto')}
+          >
+            <TrendingUp size={18} /> ทำนายเลขเด็ด
+          </button>
+          <div className="nav-divider"></div>
+          <button 
+            className={`nav-item ${activeTab === 'horoscope' ? 'active' : ''}`}
+            onClick={() => setActiveTab('horoscope')}
+          >
+            <Sparkles size={18} /> ดูดวงรายวัน
+          </button>
+        </nav>
+      </div>
 
       <main className="main-focused">
         {activeTab === 'lotto' ? (
