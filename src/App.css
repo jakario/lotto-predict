@@ -359,22 +359,235 @@ h1 {
   to { transform: rotate(360deg); }
 }
 
+.top-banner {
+  background: rgba(212, 175, 55, 0.15);
+  padding: 0.75rem;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--primary);
+  margin: -2rem -2rem 2rem -2rem;
+}
+
+.extras-row {
+  margin-top: 1.5rem;
+}
+
+.lucky-pick-card {
+  text-align: center;
+  padding: 2rem;
+}
+
+.lucky-display {
+  font-size: 5rem;
+  font-weight: 800;
+  margin: 1rem 0;
+  min-height: 100px;
+}
+
+@keyframes spin {
+  0% { transform: translateY(0); opacity: 0.3; }
+  50% { transform: translateY(-10px); opacity: 1; }
+  100% { transform: translateY(0); opacity: 0.3; }
+}
+
+.lucky-display.spinning {
+  animation: spin 0.1s infinite;
+}
+
+.dream-card {
+  padding: 1.5rem;
+}
+
+.dream-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.dream-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed var(--border);
+}
+
+.dream-label {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+}
+
+.dream-val {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
 @media (max-width: 768px) {
-  .main-row {
-    grid-template-columns: 1fr;
+  .top-banner {
+    font-size: 0.75rem;
   }
-  
-  .sub-numbers {
-    grid-template-columns: 1fr;
+.main-nav {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  background: var(--bg-card);
+  padding: 0.5rem;
+  border-radius: 50px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid var(--border);
+}
+
+.nav-item {
+  background: transparent;
+  border: none;
+  color: var(--text-dim);
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.nav-item.active {
+  background: var(--primary);
+  color: #000;
+  box-shadow: 0 0 15px var(--primary-glow);
+}
+
+.horoscope-view {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.horoscope-header {
+  text-align: center;
+  padding: 2.5rem;
+}
+
+.horoscope-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.birthday-item {
+  padding: 1.5rem;
+  position: relative;
+  transition: transform 0.3s;
+}
+
+.active-today {
+  border: 1.5px solid var(--primary);
+  box-shadow: 0 0 20px var(--primary-glow);
+}
+
+.day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1rem;
+}
+
+.day-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.luck-percent {
+  font-size: 0.85rem;
+  color: var(--primary);
+}
+
+.luck-bar {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.luck-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), #fff);
+  border-radius: 10px;
+}
+
+.luck-desc {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+}
+
+.color-chips {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.color-chip {
+  width: 30px;
+  height: 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.color-table-card {
+  padding: 2rem;
+}
+
+.color-table {
+  width: 100%;
+  margin-top: 1.5rem;
+  border-collapse: collapse;
+}
+
+.color-table th, .color-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.color-table th {
+  color: var(--text-dim);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.text-danger {
+  color: #ef4444;
+}
+
+@media (max-width: 768px) {
+  .top-banner {
+    font-size: 0.75rem;
   }
-  
+  .main-row, .sub-numbers, .grid-2, .horoscope-grid {
+    grid-template-columns: 1fr !important;
+  }
   .draw-info {
     flex-direction: column;
     text-align: center;
     padding: 1.5rem;
   }
-  
   .draw-text h2 {
     font-size: 1.8rem;
+  }
+  .main-nav {
+    width: 90%;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
