@@ -291,23 +291,40 @@ function App() {
                           ))}
                         </div>
                       </div>
+                      <div className="glass-card past-result-card">
+                        <label className="label">สถิติกองสลากงวดล่าสุด ({prediction.stats.pastResult.date})</label>
+                        <div className="past-grid">
+                          <div className="past-val big gold-text">{prediction.stats.pastResult.first}</div>
+                          <div className="past-sub-grid">
+                            <div>
+                              <span className="small-label">2 ตัวล่าง</span>
+                              <div className="past-val">{prediction.stats.pastResult.twoSuffix}</div>
+                            </div>
+                            <div>
+                              <span className="small-label">3 ตัวหน้า/ท้าย</span>
+                              <div className="past-val">{prediction.stats.pastResult.threeSuffix}</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
                     <AnimatePresence>
                       {selectedStat && (
                         <motion.div 
-                          initial={{ height: 0, opacity: 0 }} 
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          className="stat-detail-card glass-card"
+                          initial={{ scale: 0.9, opacity: 0 }} 
+                          animate={{ scale: 1, opacity: 1 }}
+                          exit={{ scale: 0.9, opacity: 0 }}
+                          className="stat-detail-card-premium glass-card"
                         >
-                          <div className="stat-detail-content">
-                            <div className="stat-num-box gold-text">{selectedStat.num}</div>
-                            <div className="stat-info-text">
-                              <p><strong>ประวัติความแม่นยำ:</strong> เคยถูกรางวัลทั้งหมด <strong>{selectedStat.hits} ครั้ง</strong> (สถิติ 10 ปี)</p>
-                              <p><strong>ออกงวดล่าสุด:</strong> {selectedStat.lastDate}</p>
+                          <div className="stat-detail-inner">
+                            <div className="stat-value-big gold-text">{selectedStat.num}</div>
+                            <div className="stat-details">
+                              <p className="stat-title">ข้อมูลเจาะลึกจาก AI</p>
+                              <p className="stat-row">🎯 เคยถูกรางวัล: <span>{selectedStat.hits} ครั้ง</span></p>
+                              <p className="stat-row">📅 งวดล่าสุดที่ออก: <span>{selectedStat.lastDate}</span></p>
+                              <button className="close-btn-premium" onClick={() => setSelectedStat(null)}>เข้าใจแล้ว</button>
                             </div>
-                            <button className="close-btn" onClick={() => setSelectedStat(null)}>ปิด</button>
                           </div>
                         </motion.div>
                       )}
