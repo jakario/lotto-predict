@@ -7,6 +7,29 @@ import { predictLotto } from './engine/lottoEngine';
 import './App.css';
 function App() {
   const [activeTab, setActiveTab] = useState('lotto');
+  const [selectedTarot, setSelectedTarot] = useState(null);
+  const [isTarotFlipping, setIsTarotFlipping] = useState(false);
+
+  const tarotCards = [
+    { name: 'The Sun (ไพ่พระอาทิตย์)', mean: 'โชคดีที่สุด! ความสำเร็จที่มาในรูปแบบลาภลอย และความรุ่งเรืองขั้นสุด', img: '19.jpg' },
+    { name: 'Wheel of Fortune (กงล้อแห่งโชค)', mean: 'กงล้อแห่งโชคลาภหมุนมาทางคุณแล้ว! มีเกณฑ์ถูกรางวัลใหญ่หรือได้เงินปึกใหญ่', img: '10.jpg' },
+    { name: 'The Empress (ไพ่จักรพรรดินี)', mean: 'ความมั่งคั่งอุดมสมบูรณ์ มีกินมีใช้ไม่ขาดมือ และจะมีโชคจากผู้หญิงผิวขาว', img: '3.jpg' },
+    { name: 'The Magician (ไพ่อัศจรรย์)', mean: 'มีซิกเซนส์ที่แม่นยำในงวดนี้ ลองเชื่อมั่นในลางสังหรณ์แรกของคุณจะให้โชค', img: '1.jpg' },
+    { name: 'The World (ไพ่โลก)', mean: 'ความสำเร็จที่สมบูรณ์แบบ ทั้งงาน เงิน และโชคลาภ จะไหลมาเทมาทุกทิศทาง', img: '21.jpg' },
+    { name: 'The Star (ไพ่ดวงดาว)', mean: 'ความหวังใหม่และโชคลาภที่รอคอยกำลังจะปรากฏ จะได้รับข่าวดีเรื่องเงินที่เคยมีปัญหา', img: '17.jpg' },
+    { name: 'Ace of Pentacles (1 เหรียญ)', mean: 'โอกาสทองเรื่องเงินมาถึงแล้ว! จะได้รับทรัพย์ก้อนโตแบบไม่คาดฝัน', img: 'ace_p.jpg' },
+    { name: 'King of Pentacles (ราชาเหรียญ)', mean: 'เจ้าแห่งความรวย! หยิบจับอะไรเป็นเงินเป็นทอง งวดนี้มีเกณฑ์เป็นเศรษฐีใหม่', img: 'king_p.jpg' }
+  ];
+
+  const handlePickTarot = () => {
+    setIsTarotFlipping(true);
+    setSelectedTarot(null);
+    setTimeout(() => {
+      const card = tarotCards[Math.floor(Math.random() * tarotCards.length)];
+      setSelectedTarot(card);
+      setIsTarotFlipping(false);
+    }, 1500);
+  };
   const [prediction, setPrediction] = useState(null);
   const [isCalculating, setIsCalculating] = useState(false);
   const [targetDate, setTargetDate] = useState('');
@@ -199,14 +222,21 @@ function App() {
             className={`nav-item ${activeTab === 'lotto' ? 'active' : ''}`}
             onClick={() => setActiveTab('lotto')}
           >
-            <TrendingUp size={18} /> ทำนายเลขเด็ด
+            <TrendingUp size={22} /> ทำนายเลขเด็ด
           </button>
           <div className="nav-divider"></div>
           <button 
             className={`nav-item ${activeTab === 'horoscope' ? 'active' : ''}`}
             onClick={() => setActiveTab('horoscope')}
           >
-            <Sparkles size={18} /> ดูดวงรายวัน
+            <Sparkles size={22} /> ดวง & สีมงคล
+          </button>
+          <div className="nav-divider"></div>
+          <button 
+            className={`nav-item ${activeTab === 'tarot' ? 'active' : ''}`}
+            onClick={() => setActiveTab('tarot')}
+          >
+            <Layout size={22} /> ไพ่ทาโรต์
           </button>
         </nav>
       </div>
