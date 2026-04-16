@@ -22,13 +22,13 @@ function App() {
   ];
 
   const horoscopes = {
-    'วันจันทร์': { luck: 85, desc: 'โชคลาภโดดเด่นจากการเดินทาง มีเกณฑ์ได้ลาภลอยแบบไม่คาดฝัน', colors: { main: '#FDE047', sub: '#4ADE80' } },
-    'วันอังคาร': { luck: 70, desc: 'ลาภลอยยังนิ่งๆ แต่ผู้ใหญ่จะให้ความช่วยเหลือเรื่องเงินทองดีมาก', colors: { main: '#F472B6', sub: '#A855F7' } },
-    'วันพุธ': { luck: 92, desc: 'ดวงกำลังพุ่งแรง! เลขที่บ้านหรือเลขรถจะให้โชคใหญ่ในงวดนี้', colors: { main: '#22C55E', sub: '#EAB308' } },
-    'วันพฤหัสบดี': { luck: 75, desc: 'เลขจากความฝันหรือความเชื่อส่วนตัวจะนำพาโชคลาภมาให้', colors: { main: '#FB923C', sub: '#EF4444' } },
-    'วันศุกร์': { luck: 80, desc: 'ระวังเรื่องการใช้จ่าย แต่โชคจากการเสี่ยงทายยังพอมีลุ้น', colors: { main: '#60A5FA', sub: '#38BDF8' } },
-    'วันเสาร์': { luck: 65, desc: 'ช้าๆ ได้พร้าเล่มงาม เน้นเลขเดิมที่เคยตามจะมีโอกาสมากกว่า', colors: { main: '#9333EA', sub: '#27272A' } },
-    'วันอาทิตย์': { luck: 88, desc: 'ดวงโชคลาภเปิดกว้าง เลขมงคลจากวัดหรือสถานที่ศักดิ์สิทธิ์จะเด่นมาก', colors: { main: '#EF4444', sub: '#991B1B' } }
+    'วันจันทร์': { luck: 85, desc: 'ปีแห่งข่าวดี! มีเกณฑ์ได้รับโชคลาภจากการเดินทางและติดต่อสื่อสาร', colors: { main: '#FFFFFF', sub: '#60A5FA', avoid: 'สีแดง, ส้ม' } },
+    'วันอังคาร': { luck: 90, desc: 'ดวงการงานพุ่งแรง! ผลงานโดดเด่น มีโอกาสได้เลื่อนขั้นเลื่อนตำแหน่งสูงมาก', colors: { main: '#F472B6', sub: '#FDE047', avoid: 'สีน้ำเงิน, ดำ' } },
+    'วันพุธ': { luck: 92, desc: 'ปีแห่งความสำเร็จในการเจรจา ค้าขายร่ำรวย ปิดดีลใหญ่ได้ดังใจหวัง', colors: { main: '#22C55E', sub: '#EAB308', avoid: 'สีแดง, ม่วง' } },
+    'วันพฤหัสบดี': { luck: 78, desc: 'ปีแห่งการเรียนรู้และการพัฒนาตนเอง สิ่งที่ทุ่มเทศึกษาจะนำพาความสำเร็จมาให้', colors: { main: '#EAB308', sub: '#FB923C', avoid: 'สีดำ, น้ำเงินเข้ม' } },
+    'วันศุกร์': { luck: 95, desc: 'ดวงความรักสดใสที่สุด! มีเกณฑ์สละโสดหรือพบเจอคู่แท้ที่เกื้อหนุนกัน', colors: { main: '#F472B6', sub: '#4ADE80', avoid: 'สีเขียวเข้ม, น้ำเงิน' } },
+    'วันเสาร์': { luck: 88, desc: 'โชคลาภพุ่งเข้าหา! จะมีโชคจากความฝันที่แม่นยำหรือลางสังหรณ์พิเศษ', colors: { main: '#A855F7', sub: '#FDE047', avoid: 'สีแดงสด, ส้ม' } },
+    'วันอาทิตย์': { luck: 80, desc: 'ปีแห่งการเริ่มต้นใหม่ สิ่งที่เคยหยุดชะงักจะกลับมาเดินหน้าก้าวกระโดด', colors: { main: '#EF4444', sub: '#FDE047', avoid: 'สีม่วงเข้ม, น้ำเงิน' } }
   };
 
   const handleLuckyPick = () => {
@@ -218,9 +218,10 @@ function App() {
                   <div className="color-section">
                     <span className="label">สีมงคล:</span>
                     <div className="color-chips">
-                      <div className="color-chip" style={{ backgroundColor: data.colors.main }}></div>
-                      <div className="color-chip" style={{ backgroundColor: data.colors.sub }}></div>
+                      <div className="color-chip" title="งาน/เงิน" style={{ backgroundColor: data.colors.main }}></div>
+                      <div className="color-chip" title="ความรัก" style={{ backgroundColor: data.colors.sub }}></div>
                     </div>
+                    <p className="avoid-text">เลี่ยง: {data.colors.avoid}</p>
                   </div>
                 </div>
               ))}
