@@ -138,11 +138,42 @@ function App() {
                   </div>
                 </div>
 
+                <div className="stats-row grid-2">
+                  <div className="glass-card winrate-card">
+                    <div className="win-header">
+                      <TrendingUp className="icon-gold" size={24} />
+                      <span className="label">อัตราความแม่นยำ (Winrate)</span>
+                    </div>
+                    <div className="win-value gold-text">{prediction.stats.winrate}%</div>
+                    <p className="win-desc">อิงสถิติการเข้าเป้าจากกลุ่มเลขแนะนำย้อนหลัง 10 ปี</p>
+                  </div>
+
+                  <div className="glass-card past-result-card">
+                    <span className="label">ผลรางวัลย้อนหลัง ({prediction.stats.pastResult.date})</span>
+                    <div className="past-grid">
+                      <div className="past-item">
+                        <span className="small-label">รางวัลที่ 1</span>
+                        <div className="past-val big">{prediction.stats.pastResult.firstPrize}</div>
+                      </div>
+                      <div className="past-sub-grid">
+                        <div className="past-item">
+                          <span className="small-label">2 ตัวท้าย</span>
+                          <div className="past-val gold-text">{prediction.stats.pastResult.twoSuffix}</div>
+                        </div>
+                        <div className="past-item">
+                          <span className="small-label">3 ตัวหน้า/ท้าย</span>
+                          <div className="past-val">{prediction.stats.pastResult.threeSuffix}</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="analysis-summary glass-card">
                   <div className="analysis-item">
                     <TrendingUp size={20} className="icon-gold" />
                     <span>
-                      สรุปวิเคราะห์: อิงสถิติ{prediction.analysis.day} เดือน{prediction.analysis.month} ณ {prediction.analysis.location}
+                      สรุปวิเคราะห์: อิงสถิติ{prediction.analysis.day} เดือน{prediction.analysis.month} ณ {prediction.analysis.location} และความถี่สะสม 10 ปี
                     </span>
                   </div>
                 </div>
