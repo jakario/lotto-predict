@@ -79,7 +79,7 @@ function App() {
         <div className="logo-section">
           <Sparkles className="logo-icon-main" />
           <h1 className="gold-text">ANTIGRAVITY</h1>
-          <p className="subtitle">ศูนย์รวมความรวยและโชคลาภ ครบวงจร</p>
+          <p className="subtitle">ใช้ข้อมูลสถิติ 10 ปี + AI คัดเลขมงคลให้คุณ</p>
         </div>
       </header>
 
@@ -127,7 +127,7 @@ function App() {
                   <motion.div key="r" initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }}>
                     <div className="main-row">
                       <div className="main-number glass-card primary-focus">
-                        <span className="label">เลขเน้น 1 ตัว (วิ่ง)</span>
+                        <span className="label">AI คัดเลขเน้น 1 ตัว (วิ่ง)</span>
                         <div className="digit-big gold-text">{prediction.singleDigit}</div>
                       </div>
                       <div className="doubles-card glass-card">
