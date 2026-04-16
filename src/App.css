@@ -434,51 +434,103 @@ h1 {
 .nav-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
   width: 100%;
 }
 
 .main-nav {
   display: flex;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  padding: 0.4rem;
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(20px);
+  padding: 0.6rem;
   border-radius: 100px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
   align-items: center;
 }
 
 .nav-item {
   background: transparent;
   border: none;
-  color: rgba(255, 255, 255, 0.6);
-  padding: 0.8rem 1.8rem;
+  color: rgba(255, 255, 255, 0.5);
+  padding: 1.2rem 2.5rem;
   border-radius: 100px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 0.7rem;
-  font-weight: 600;
-  font-size: 0.95rem;
+  gap: 1rem;
+  font-weight: 700;
+  font-size: 1.1rem;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .nav-item:hover {
   color: var(--primary);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .nav-item.active {
   background: var(--primary);
   color: #000;
-  box-shadow: 0 4px 15px var(--primary-glow);
+  box-shadow: 0 4px 20px var(--primary-glow);
 }
 
 .nav-divider {
-  width: 1px;
-  height: 20px;
-  background: rgba(255, 255, 255, 0.1);
-  margin: 0 0.5rem;
+  width: 2px;
+  height: 30px;
+  background: rgba(212, 175, 55, 0.2);
+  margin: 0 1rem;
+}
+
+.color-section-v2 {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1.2rem;
+}
+
+.color-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.label-v2 {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.color-row {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.color-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.color-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.color-group.avoid .color-name {
+  color: #ef4444;
+}
+
+.color-group.avoid .label-v2 {
+  color: #ef4444;
+  opacity: 0.7;
 }
 
 .horoscope-view {
@@ -613,4 +665,13 @@ h1 {
     flex-wrap: wrap;
     justify-content: center;
   }
+}
+
+.tomorrow-hint {
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  font-style: italic;
+  margin: 1.5rem 0;
+  opacity: 0.8;
 }

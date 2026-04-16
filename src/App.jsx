@@ -13,22 +13,89 @@ function App() {
   const [isLuckySpinning, setIsLuckySpinning] = useState(false);
   const [luckyNum, setLuckyNum] = useState('--');
 
-  const dreams = [
+  // Expanded Dream database
+  const dreamPool = [
     { label: 'งู/สัตว์เลื้อยคลาน', val: '5, 6, 56, 65' },
     { label: 'น้ำ/ปลา/ฝน', val: '8, 2, 82, 28' },
     { label: 'ทอง/เงิน/ของมีค่า', val: '4, 9, 49, 94' },
     { label: 'ศพ/คนตาย', val: '0, 4, 04, 40' },
-    { label: 'พระ/สิ่งศักดิ์สิทธิ์', val: '9, 1, 91, 19' }
+    { label: 'พระ/สิ่งศักดิ์สิทธิ์', val: '9, 1, 91, 19' },
+    { label: 'บ้าน/อาคาร/สิ่งก่อสร้าง', val: '4, 7, 47, 74' },
+    { label: 'เด็ก/กุมารทอง', val: '1, 3, 13, 31' },
+    { label: 'อุบัติเหตุ/เลือด', val: '6, 0, 60, 06' },
+    { label: 'ภูเขา/ที่สูง', val: '7, 9, 79, 97' },
+    { label: 'แหวน/กำไล/เครื่องประดับ', val: '0, 8, 08, 80' },
+    { label: 'ช้าง/สัตว์ใหญ่', val: '9, 5, 95, 59' },
+    { label: 'ไฟ/แสงสว่าง', val: '3, 4, 34, 43' }
   ];
 
+  // Logic to pick 5 dreams based on the date seed
+  const [dailyDreams, setDailyDreams] = useState([]);
+
   const horoscopes = {
-    'วันจันทร์': { luck: 85, desc: 'ปีแห่งข่าวดี! มีเกณฑ์ได้รับโชคลาภจากการเดินทางและติดต่อสื่อสาร', colors: { main: '#FFFFFF', sub: '#60A5FA', avoid: 'สีแดง, ส้ม' } },
-    'วันอังคาร': { luck: 90, desc: 'ดวงการงานพุ่งแรง! ผลงานโดดเด่น มีโอกาสได้เลื่อนขั้นเลื่อนตำแหน่งสูงมาก', colors: { main: '#F472B6', sub: '#FDE047', avoid: 'สีน้ำเงิน, ดำ' } },
-    'วันพุธ': { luck: 92, desc: 'ปีแห่งความสำเร็จในการเจรจา ค้าขายร่ำรวย ปิดดีลใหญ่ได้ดังใจหวัง', colors: { main: '#22C55E', sub: '#EAB308', avoid: 'สีแดง, ม่วง' } },
-    'วันพฤหัสบดี': { luck: 78, desc: 'ปีแห่งการเรียนรู้และการพัฒนาตนเอง สิ่งที่ทุ่มเทศึกษาจะนำพาความสำเร็จมาให้', colors: { main: '#EAB308', sub: '#FB923C', avoid: 'สีดำ, น้ำเงินเข้ม' } },
-    'วันศุกร์': { luck: 95, desc: 'ดวงความรักสดใสที่สุด! มีเกณฑ์สละโสดหรือพบเจอคู่แท้ที่เกื้อหนุนกัน', colors: { main: '#F472B6', sub: '#4ADE80', avoid: 'สีเขียวเข้ม, น้ำเงิน' } },
-    'วันเสาร์': { luck: 88, desc: 'โชคลาภพุ่งเข้าหา! จะมีโชคจากความฝันที่แม่นยำหรือลางสังหรณ์พิเศษ', colors: { main: '#A855F7', sub: '#FDE047', avoid: 'สีแดงสด, ส้ม' } },
-    'วันอาทิตย์': { luck: 80, desc: 'ปีแห่งการเริ่มต้นใหม่ สิ่งที่เคยหยุดชะงักจะกลับมาเดินหน้าก้าวกระโดด', colors: { main: '#EF4444', sub: '#FDE047', avoid: 'สีม่วงเข้ม, น้ำเงิน' } }
+    'วันจันทร์': { 
+      luck: 85, 
+      desc: 'ปีแห่งข่าวดี! มีเกณฑ์ได้รับโชคลาภจากการเดินทางและติดต่อสื่อสาร', 
+      colors: { 
+        main: { label: 'ขาวมุก', hex: '#FFFFFF' }, 
+        sub: { label: 'ฟ้าใส', hex: '#60A5FA' }, 
+        avoid: { label: 'สีแดง, ส้ม', hex: '#EF4444' } 
+      } 
+    },
+    'วันอังคาร': { 
+      luck: 90, 
+      desc: 'ดวงการงานพุ่งแรง! ผลงานโดดเด่น มีโอกาสได้เลื่อนขั้นเลื่อนตำแหน่งสูงมาก', 
+      colors: { 
+        main: { label: 'ชมพู', hex: '#F472B6' }, 
+        sub: { label: 'เหลือง', hex: '#FDE047' }, 
+        avoid: { label: 'น้ำเงิน, ดำ', hex: '#1E3A8A' } 
+      } 
+    },
+    'วันพุธ': { 
+      luck: 92, 
+      desc: 'ปีแห่งความสำเร็จในการเจรจา ค้าขายร่ำรวย ปิดดีลใหญ่ได้ดังใจหวัง', 
+      colors: { 
+        main: { label: 'เขียวเข้ม', hex: '#166534' }, 
+        sub: { label: 'ทอง', hex: '#EAB308' }, 
+        avoid: { label: 'แดง, ม่วง', hex: '#991B1B' } 
+      } 
+    },
+    'วันพฤหัสบดี': { 
+      luck: 78, 
+      desc: 'ปีแห่งการเรียนรู้และการพัฒนาตนเอง สิ่งที่ทุ่มเทศึกษาจะนำพาความสำเร็จมาให้', 
+      colors: { 
+        main: { label: 'ส้ม', hex: '#FB923C' }, 
+        sub: { label: 'ทองแดง', hex: '#B45309' }, 
+        avoid: { label: 'ดำ, น้ำเงิน', hex: '#000000' } 
+      } 
+    },
+    'วันศุกร์': { 
+      luck: 95, 
+      desc: 'ดวงความรักสดใสที่สุด! มีเกณฑ์สละโสดหรือพบเจอคู่แท้ที่เกื้อหนุนกัน', 
+      colors: { 
+        main: { label: 'ชมพูอ่อน', hex: '#FBCFE8' }, 
+        sub: { label: 'เขียวตอง', hex: '#86EFAC' }, 
+        avoid: { label: 'เทา, น้ำเงิน', hex: '#4B5563' } 
+      } 
+    },
+    'วันเสาร์': { 
+      luck: 88, 
+      desc: 'โชคลาภพุ่งเข้าหา! จะมีโชคจากความฝันที่แม่นยำหรือลางสังหรณ์พิเศษ', 
+      colors: { 
+        main: { label: 'ม่วง', hex: '#A855F7' }, 
+        sub: { label: 'เหลืองมุก', hex: '#FEF9C3' }, 
+        avoid: { label: 'แดง, ส้ม', hex: '#DC2626' } 
+      } 
+    },
+    'วันอาทิตย์': { 
+      luck: 80, 
+      desc: 'ปีแห่งการเริ่มต้นใหม่ สิ่งที่เคยหยุดชะงักจะกลับมาเดินหน้าก้าวกระโดด', 
+      colors: { 
+        main: { label: 'แดง', hex: '#EF4444' }, 
+        sub: { label: 'เหลืองนวล', hex: '#FEF08A' }, 
+        avoid: { label: 'ม่วง, ดำ', hex: '#581C87' } 
+      } 
+    }
   };
 
   const handleLuckyPick = () => {
@@ -49,6 +116,11 @@ function App() {
     const day = now.getDate();
     const month = now.getMonth();
     const year = now.getFullYear();
+
+    // Generate daily dreams based on date seed
+    const seed = day + month + year;
+    const shuffled = [...dreamPool].sort(() => 0.5 - (Math.sin(seed) * 0.5 + 0.5));
+    setDailyDreams(shuffled.slice(0, 5));
 
     let nextDraw;
     if (day <= 16) {
@@ -147,15 +219,16 @@ function App() {
                         </button>
                       </div>
                       <div className="glass-card dream-card">
-                        <span className="label">ทำนายฝันเลขเด็ด</span>
+                        <span className="label">ฝันยอดฮิต 5 อันดับวันนี้</span>
                         <div className="dream-list">
-                          {dreams.map(d => (
+                          {dailyDreams.map(d => (
                             <div key={d.label} className="dream-item">
                               <span className="dream-label">{d.label}</span>
                               <span className="dream-val gold-text">{d.val}</span>
                             </div>
                           ))}
                         </div>
+                        <p className="stat-label">*สุ่มวิเคราะห์ฝันเด่นประจำวัน {prediction?.analysis?.day}</p>
                       </div>
                     </div>
 
@@ -207,25 +280,43 @@ function App() {
             </div>
 
             <div className="horoscope-grid">
-              {Object.entries(horoscopes).map(([day, data]) => (
-                <div key={day} className={`glass-card birthday-item ${day === todayThai ? 'active-today' : ''}`}>
+              {Object.entries(horoscopes)
+                .filter(([day]) => day === todayThai)
+                .map(([day, data]) => (
+                <div key={day} className="glass-card birthday-item active-today">
                   <div className="day-header">
-                    <span className="day-name">{day}</span>
-                    <span className="luck-percent">โชคลาภ {data.luck}%</span>
+                    <span className="day-name">ดวงประจำ{day} (ของคุณ)</span>
+                    <span className="luck-percent">พลังโชคลาภ {data.luck}%</span>
                   </div>
                   <div className="luck-bar"><div className="luck-fill" style={{ width: `${data.luck}%` }}></div></div>
                   <p className="luck-desc">{data.desc}</p>
-                  <div className="color-section">
-                    <span className="label">สีมงคล:</span>
-                    <div className="color-chips">
-                      <div className="color-chip" title="งาน/เงิน" style={{ backgroundColor: data.colors.main }}></div>
-                      <div className="color-chip" title="ความรัก" style={{ backgroundColor: data.colors.sub }}></div>
+                  <div className="color-section-v2">
+                    <div className="color-group">
+                      <span className="label-v2">สีมงคลเสริมโชค:</span>
+                      <div className="color-info">
+                        <div className="color-row">
+                          <div className="color-dot" style={{ backgroundColor: data.colors.main.hex }}></div>
+                          <span className="color-name">{data.colors.main.label} (การเงิน/งาน)</span>
+                        </div>
+                        <div className="color-row">
+                          <div className="color-dot" style={{ backgroundColor: data.colors.sub.hex }}></div>
+                          <span className="color-name">{data.colors.sub.label} (ความรัก)</span>
+                        </div>
+                      </div>
                     </div>
-                    <p className="avoid-text">เลี่ยง: {data.colors.avoid}</p>
+                    
+                    <div className="color-group avoid">
+                      <span className="label-v2">ควรเลี่ยง:</span>
+                      <div className="color-row">
+                        <div className="color-dot" style={{ backgroundColor: data.colors.avoid.hex }}></div>
+                        <span className="color-name">{data.colors.avoid.label}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
+            <p className="tomorrow-hint">อยากรู้ดวงวันพรุ่งนี้? อย่าลืมกลับมาเช็คใหม่ที่นี่นะครับ ✨</p>
 
             <div className="glass-card color-table-card">
               <span className="label">ตารางสีมงคลพรีเมียม (เรียกทรัพย์)</span>
