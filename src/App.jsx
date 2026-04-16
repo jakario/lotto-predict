@@ -29,7 +29,7 @@ function App() {
     { label: 'ไฟ/แสงสว่าง', val: '3, 4, 34, 43' }
   ];
 
-  // Logic to pick 5 dreams based on the date seed
+  // Pick 5 dreams based on date
   const [dailyDreams, setDailyDreams] = useState([]);
 
   const horoscopes = {
@@ -98,26 +98,23 @@ function App() {
     }
   };
 
-  const handleLuckyPick = () => {
-    setIsLuckySpinning(true);
-    let count = 0;
-    const interval = setInterval(() => {
-      setLuckyNum(Math.floor(Math.random() * 100).toString().padStart(2, '0'));
-      count++;
-      if (count > 15) {
-        clearInterval(interval);
-        setIsLuckySpinning(false);
-      }
-    }, 80);
-  };
-
   useEffect(() => {
     const now = new Date();
     const day = now.getDate();
     const month = now.getMonth();
     const year = now.getFullYear();
+    const dateKey = `${year}-${month}-${day}`;
 
-    // Generate daily dreams based on date seed
+    // 1. Handle Persistent Lucky Number
+    const savedLucky = localStorage.getItem('lucky_click_data');
+    if (savedLucky) {
+      const parsed = JSON.parse(savedLucky);
+      if (parsed.date === dateKey) {
+        setLuckyNum(parsed.num);
+      }
+    }
+
+    // 2. Generate daily dreams
     const seed = day + month + year;
     const shuffled = [...dreamPool].sort(() => 0.5 - (Math.sin(seed) * 0.5 + 0.5));
     setDailyDreams(shuffled.slice(0, 5));
@@ -138,6 +135,40 @@ function App() {
       setIsCalculating(false);
     }, 1200);
   }, []);
+
+  const handleLuckyPick = () => {
+    const now = new Date();
+    const dateKey = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`;
+    
+    // Check if already clicked today
+    const savedLucky = localStorage.getItem('lucky_click_data');
+    if (savedLucky) {
+      const parsed = JSON.parse(savedLucky);
+      if (parsed.date === dateKey) {
+        setLuckyNum(parsed.num);
+        return;
+      }
+    }
+
+    setIsLuckySpinning(true);
+    let count = 0;
+    const finalNum = Math.floor(Math.random() * 100).toString().padStart(2, '0');
+    
+    const interval = setInterval(() => {
+      setLuckyNum(Math.floor(Math.random() * 100).toString().padStart(2, '0'));
+      count++;
+      if (count > 20) {
+        clearInterval(interval);
+        setLuckyNum(finalNum);
+        setIsLuckySpinning(false);
+        // Save to localStorage
+        localStorage.setItem('lucky_click_data', JSON.stringify({
+          date: dateKey,
+          num: finalNum
+        }));
+      }
+    }, 60);
+  };
 
   const todayThai = prediction?.analysis?.day || 'วันพฤหัสบดี';
 
@@ -219,12 +250,12 @@ function App() {
                         </button>
                       </div>
                       <div className="glass-card dream-card">
-                        <span className="label">ฝันยอดฮิต 5 อันดับวันนี้</span>
-                        <div className="dream-list">
+                        <span className="label">ฝันยอดฮิต 5 อันดับวันนี้ (AI วิเคราะห์)</span>
+                        <div className="dream-list-v2">
                           {dailyDreams.map(d => (
-                            <div key={d.label} className="dream-item">
-                              <span className="dream-label">{d.label}</span>
-                              <span className="dream-val gold-text">{d.val}</span>
+                            <div key={d.label} className="dream-row">
+                              <span className="dream-text-label">{d.label}</span>
+                              <span className="dream-text-val gold-text">{d.val}</span>
                             </div>
                           ))}
                         </div>
@@ -234,13 +265,13 @@ function App() {
 
                     <div className="sub-numbers">
                       <div className="glass-card result-box">
-                        <span className="label">2 ตัวท้าย (สถิติ 10 ปี)</span>
+                        <span className="label">2 ตัวท้าย (สถิติ 10 ปี) - Winrate {prediction.stats.winrate}%</span>
                         <div className="number-list">
                           {prediction.twoDigits.map(n => <span key={n} className="num-badge">{n}</span>)}
                         </div>
                       </div>
                       <div className="glass-card result-box">
-                        <span className="label">3 ตัวท้าย (สถิติ 10 ปี)</span>
+                        <span className="label">3 ตัวท้าย (สถิติ 10 ปี) - Winrate {prediction.stats.winrate}%</span>
                         <div className="number-list">
                           {prediction.threeDigits.map(n => <span key={n} className="num-badge gold">{n}</span>)}
                         </div>
